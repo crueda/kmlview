@@ -1,6 +1,14 @@
 <template>
   <div class="main">
-    <GMap :center.sync="center" :zoom.sync="zoom" :mapHeight="mapHeight"/>
+        <div class="main__panel">
+          <select class="main__panel--select"
+          v-model="kmlName"
+        >
+        <option>ruta1</option>
+        <option>ruta2</option>
+              </select>
+    </div>
+    <GMap :kml.sync="kmlName" :mapHeight="mapHeight"/>
   </div>
 </template>
 
@@ -35,9 +43,9 @@ export default {
         width: 0,
         height: 0,
       },     
-      zoom: 6,
       mapHeight: '0px',
-      center: { lat: 41.508, lng: -4.587 },
+      kmlName: 'ruta1',
+      kmls: ['ruta1', 'ruta2']
     }
   },
   mixins: [apiMixin],
@@ -116,4 +124,15 @@ export default {
   color: red;
 }
 
+.main__panel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+.main__panel--select {
+  width: 150px;
+  height: 40px;
+}
 </style>

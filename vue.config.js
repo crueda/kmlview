@@ -63,5 +63,5 @@ if (!process.env.VUE_APP_BOOK) {
 }
 
 //config.publicPath = process.env.VUE_APP_BASE + '/'
-config.publicPath = 'https://web-demos.kyroslbs.com/kmlview/'
+// config.publicPath = 'https://web-demos.kyroslbs.com/kmlview/'
 module.exports = config

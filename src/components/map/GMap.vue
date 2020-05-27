@@ -50,6 +50,7 @@ export default {
   name: 'gmap-historic',
   props: {
     mapHeight: String,
+    kml: String,
   },
   data() {
     return {
@@ -61,7 +62,9 @@ export default {
       path: [],
       interval: null,
       centerMode: true,
-      ball: 'https://images.kyroslbs.com/kml/dot32.png',
+      ball: 'https://images.kyroslbs.com/kml/dot20.png',
+      ball2: 'https://images.kyroslbs.com/kml/dot20_2.png',
+      layer: null,
     }
   },
   computed: {
@@ -69,7 +72,11 @@ export default {
     google: VueGoogleMaps.gmapApi,
   },
   mixins: [utilMixin],
-  watch: {},
+  watch: {
+    kml: function(val) {
+      this.loadKml()
+    }
+  },
   mounted() {
     this.loadKml()
     this.geolocate()
@@ -81,13 +88,12 @@ export default {
   methods: {
     loadKml() {
       this.$refs.gmap.$mapPromise.then(map => {
+        let name = 'https://images.kyroslbs.com/kml/' + this.kml + '.kml' + '?dummy=' + new Date().getTime()
         let options = {
           map: map,
-          url:
-            `https://images.kyroslbs.com/kml/ruta1.kml?dummy=` +
-            new Date().getTime(),
+          url: name
         }
-        let kml = new google.maps.KmlLayer(options)
+        this.layer = new google.maps.KmlLayer(options)
       })
     },
     onClickMarker (m) {
@@ -103,14 +109,27 @@ export default {
         }
         // this.zoom = 15
         this.markers.length = 0
-        let icon = this.ball
-        if (this.google !== null) {
-          icon = {
-            url: this.ball,
-            size: new this.google.maps.Size(32, 32),
-            origin: new this.google.maps.Point(0, 0),
-            anchor: new this.google.maps.Point(16, 16),
+        let icon
+        if (this.centerMode) {
+          icon = this.ball
+          if (this.google !== null) {
+            icon = {
+              url: this.ball,
+              size: new this.google.maps.Size(20, 20),
+              origin: new this.google.maps.Point(0, 0),
+              anchor: new this.google.maps.Point(10, 10),
+            }
           }
+        } else {
+          icon = this.ball2
+          if (this.google !== null) {
+            icon = {
+              url: this.ball2,
+              size: new this.google.maps.Size(20, 20),
+              origin: new this.google.maps.Point(0, 0),
+              anchor: new this.google.maps.Point(10, 10),
+            }
+          }          
         }
         let marker = {
           icon,
