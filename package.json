@@ -33,7 +33,7 @@
     "lodash": "4.17.15",
     "mdbvue": "5.5.1",
     "medium-editor": "^5.23.3",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "moment-timezone": "^0.5.27",
     "normalize.css": "^8.0.1",
     "popper.js": "^1.15.0",
